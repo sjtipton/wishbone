@@ -3,21 +3,21 @@ development:
   encoding: unicode
   database: wishbone_development
   pool: 5
-  username: wishbone
-  password:
+  username: rails
+  password: marm0t
 
 test:
   adapter: postgresql
   encoding: unicode
   database: wishbone_test
   pool: 5
-  username: wishbone
-  password:
+  username: rails
+  password: marm0t
 
 production:
   adapter: postgresql
   encoding: unicode
   database: wishbone_production
   pool: 5
-  username: wishbone
-  password:
+  username: rails
+  password: marm0t
