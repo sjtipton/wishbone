@@ -1,5 +1,12 @@
 Wishbone::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  HYDRA = Typhoeus::Hydra.new(max_concurrency: 20) # keep from killing some servers
+
+  Wildcat::Config.hydra = HYDRA
+  Wildcat::Config.protocol = "http"
+  Wildcat::Config.host = "localhost:3000"
+  Wildcat::Config.api_version = "api/v1"
+  Wildcat::Config.auth_token = SecureRandom.hex
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
