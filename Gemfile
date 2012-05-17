@@ -4,7 +4,7 @@ gem 'rails', '3.2.3'
 gem 'pg'
 gem 'thin'
 gem 'slim-rails'
-gem 'wildcat', '0.0.4', path: File.join(File.dirname(__FILE__), '/vendor/gems/wildcat-0.0.4')
+gem 'wildcat', '0.0.5', path: File.join(File.dirname(__FILE__), '/vendor/gems/wildcat-0.0.5')
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.8.1'

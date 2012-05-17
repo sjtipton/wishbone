@@ -1,7 +1,7 @@
 PATH
-  remote: vendor/gems/wildcat-0.0.4
+  remote: vendor/gems/wildcat-0.0.5
   specs:
-    wildcat (0.0.4)
+    wildcat (0.0.5)
       activemodel (~> 3.2.3)
       rake
       typhoeus
@@ -219,4 +219,4 @@ DEPENDENCIES
   thin
   turn
   uglifier (>= 1.0.3)
-  wildcat (= 0.0.4)!
+  wildcat (= 0.0.5)!
