@@ -2,18 +2,25 @@ require 'spec_helper'
 
 describe GamesController do
 
+  before do
+    @game = FactoryGirl.build(:game)
+  end
+
   describe "GET 'index'" do
-    it "returns http success" do
-      get 'index'
+
+    before { get :index }
+
+    it "should be successful" do
       response.should be_success
     end
   end
 
   describe "GET 'show'" do
-    it "returns http success" do
-      get 'show'
+
+    before { get :show, id: @game.id }
+
+    it "should be successful" do
       response.should be_success
     end
   end
-
 end
