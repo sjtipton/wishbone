@@ -13,4 +13,10 @@ Wishbone::Application.routes.draw do
     match '/teams' => :index, as: :teams
     match '/teams/:id' => :show, as: :team
   end
+
+  # Omniauth Facebook routes
+  scope controller: 'sessions', constraints: { provider: /facebook/ } do
+    match '/auth/:provider/callback' => :authenticate_user, as: :omniauth_callback
+    match '/auth/failure' => :failure, as: :omniauth_failure
+  end
 end
