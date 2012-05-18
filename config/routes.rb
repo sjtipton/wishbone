@@ -8,4 +8,9 @@ Wishbone::Application.routes.draw do
   scope controller: 'team_games', constraints: { id: /[0-9]+/ } do
     match '/teams/:id/schedule' => :index, as: :team_schedule
   end
+
+  scope controller: 'teams', constraints: { id: /[0-9]+/ } do
+    match '/teams' => :index, as: :teams
+    match '/teams/:id' => :show, as: :team
+  end
 end
