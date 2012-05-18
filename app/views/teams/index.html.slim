@@ -1,2 +1,13 @@
-h1 Teams#index
-p Find me in app/views/teams/index.html.slim
+h1 Teams
+
+table
+	tr
+		th
+		th
+		th
+
+	- @teams.each do |team|
+		tr
+			td = link_to team.name, team_path(team.id)
+			td = team.location
+			td #{team.conference} #{team.division}

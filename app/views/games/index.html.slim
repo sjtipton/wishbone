@@ -1,2 +1,11 @@
-h1 Games#index
-p Find me in app/views/games/index.html.slim
+h1 2012 Schedule
+
+table
+	tr
+		th
+		th
+
+	- @schedule.each do |game|
+		tr
+			td = link_to game.label, game_path(game.id)
+			td = Time.parse(game.played_at).strftime('%b %d')
