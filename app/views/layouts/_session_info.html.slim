@@ -1,0 +1,5 @@
+- if facebook_user_signed_in?
+	= current_facebook_user
+	= link_to 'Sign Out', user_signout_path
+- else
+	= link_to 'Sign In with Facebook', '/auth/facebook'
