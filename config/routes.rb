@@ -1,7 +1,7 @@
 Wishbone::Application.routes.draw do
 
   root to: "home#index"
-  get '/authentication_menu' => "home#authentication_menu"
+  get '/authentication_menu' => "home#authentication_menu", as: :authentication_menu
 
   scope controller: 'games', constraints: { id: /[0-9]+/ } do
     get '/schedule' => :index, as: :schedule
