@@ -1,5 +1,6 @@
 - if facebook_user_signed_in?
-	= current_facebook_user
-	= link_to 'Sign Out', user_signout_path
+	h2 Welcome #{current_facebook_user[:info]['first_name']} | #{link_to 'Sign Out', user_signout_path}
+
+	p = current_facebook_user[:info]['description']
 - else
 	= link_to 'Sign In with Facebook', '/auth/facebook'
