@@ -20,4 +20,12 @@ FactoryGirl.define do
     away_team_id  SecureRandom.random_number(1e2.to_i)
     played_at     Time.now.to_json
   end
+
+  factory :user do
+    uid               SecureRandom.hex
+    provider          "facebook"
+    email             Forgery(:internet).email_address
+    sign_in_count     SecureRandom.random_number(1e1.to_i)
+    last_sign_in_at   Time.now
+  end
 end

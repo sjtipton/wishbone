@@ -9,9 +9,8 @@ class SessionsController < ApplicationController
                 alert: "Sorry, we were not able to authenticate you using your chosen sign on method" and return
     end
 
-    session[:user] = { info: auth_hash['info'],
-                        uid: auth_hash['uid'],
-                   provider: auth_hash['provider'] }
+    sign_in_and_persist_new_or_existing_user(auth_hash)
+
     redirect_to root_path, status: 301, notice: "You have successfully been authenticated through Facebook"
   end
 
