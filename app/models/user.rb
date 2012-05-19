@@ -11,4 +11,11 @@ class User < ActiveRecord::Base
   validates :provider, inclusion: { in: PROVIDERS, message: "not valid" }
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i,
                               message: "is not an email." }
+
+  def self.find_from_oauth(auth_hash)
+    if auth_hash.present?
+      user = User.where(email: auth_hash['info']['email']).first
+    end
+    user
+  end
 end
