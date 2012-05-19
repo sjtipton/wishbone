@@ -21,6 +21,14 @@ describe GamesController do
 
     context "when invalid" do
 
+      it ":post '/schedule' should not be routable" do
+        { post: "/schedule" }.should_not be_routable
+      end
+
+      it ":post '/games/:id' should not be routable" do
+        { post: "/games/#{@id}" }.should_not be_routable
+      end
+
       context "given a non-integer :id for an otherwise valid route" do
 
         it ":get '/games/one' should not be routable" do

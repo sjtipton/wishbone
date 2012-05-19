@@ -5,6 +5,8 @@ gem 'pg'
 gem 'thin'
 gem 'slim-rails'
 gem 'wildcat', '0.0.5', path: File.join(File.dirname(__FILE__), '/vendor/gems/wildcat-0.0.5')
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.8.1'
