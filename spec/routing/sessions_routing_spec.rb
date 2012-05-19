@@ -31,6 +31,10 @@ describe SessionsController do
 
     context "when invalid" do
 
+      it ":post '/sign_out' should not be routable" do
+        { post: "/sign_out" }.should_not be_routable
+      end
+
       context "given a provider other than facebook" do
 
         it ":get '/auth/google/callback' should not be routable" do

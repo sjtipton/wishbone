@@ -21,6 +21,14 @@ describe TeamsController do
 
     context "when invalid" do
 
+      it ":post '/teams' should not be routable" do
+        { post: "/teams" }.should_not be_routable
+      end
+
+      it ":post '/teams/:id' should not be routable" do
+        { post: "/teams/#{@id}" }.should_not be_routable
+      end
+
       context "given a non-integer :id for an otherwise valid route" do
 
         it ":get '/teams/one' should not be routable" do
