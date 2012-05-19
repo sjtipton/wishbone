@@ -138,4 +138,29 @@ describe SessionsController do
       end
     end
   end
+
+  describe "GET 'destroy'" do
+
+    before do
+      request.session[:user] = OmniAuth.config.mock_auth[:facebook]
+      request.session.should_not be_nil
+      get :destroy
+    end
+
+    it "should be permanent redirect" do
+      response.status.should be(301)
+    end
+
+    it "should destroy the user session" do
+      request.session[:user].should be_nil
+    end
+
+    it "should set flash[:notice] as 'You are now signed out'" do
+      flash[:notice].should eq 'You are now signed out'
+    end
+
+    it "should redirect to root_path" do
+      response.should redirect_to root_path
+    end
+  end
 end

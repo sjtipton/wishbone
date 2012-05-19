@@ -12,12 +12,17 @@ class SessionsController < ApplicationController
     session[:user] = { info: auth_hash['info'],
                         uid: auth_hash['uid'],
                    provider: auth_hash['provider'] }
-    redirect_to root_path, status: 301, notice: "You have successfully been authenticated through Facebook" and return
+    redirect_to root_path, status: 301, notice: "You have successfully been authenticated through Facebook"
   end
 
   def failure
     redirect_to session[:return_uri] || root_path,
                status: 301,
-                alert: "Sorry, we were not able to authenticate you using your chosen sign on method" and return
+                alert: "Sorry, we were not able to authenticate you using your chosen sign on method"
+  end
+
+  def destroy
+    session[:user] = nil
+    redirect_to root_path, status: 301, notice: "You are now signed out"
   end
 end
