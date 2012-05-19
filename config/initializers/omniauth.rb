@@ -6,7 +6,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
                    user_likes,
                    user_location,
                    user_online_presence,
-                   manage_pages,
                    publish_stream',
   client_options: { ssl: { ca_file: '/usr/lib/ssl/certs/ca-certificates.crt' } } }
 end
