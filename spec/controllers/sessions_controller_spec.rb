@@ -35,7 +35,7 @@ describe SessionsController do
       end
     end
 
-    context "when declining access or otherwise not valid " do
+    context "when Facebook does not return an auth hash" do
 
       context "when the omniauth origin is present" do
 
@@ -65,6 +65,59 @@ describe SessionsController do
 
         before do
           post :authenticate_user, provider: 'facebook'
+        end
+
+        it "should be permanent redirect" do
+          response.status.should be(301)
+        end
+
+        it "should not instantiate a user session" do
+          request.session[:user].should be_nil
+        end
+
+        it "should set flash[:alert] as 'Sorry, we were not able to authenticate you using your chosen sign on method'" do
+          flash[:alert].should eq 'Sorry, we were not able to authenticate you using your chosen sign on method'
+        end
+
+        it "should redirect to root_path" do
+          response.should redirect_to root_path
+        end
+      end
+    end
+  end
+
+  describe "POST 'failure'" do
+
+    context "when declining access or otherwise not valid" do
+
+      context "when request.session[:return_uri] is present" do
+
+        before do
+          request.session[:return_uri] = schedule_path
+          post :failure
+        end
+
+        it "should be permanent redirect" do
+          response.status.should be(301)
+        end
+
+        it "should not instantiate a user session" do
+          request.session[:user].should be_nil
+        end
+
+        it "should set flash[:alert] as 'Sorry, we were not able to authenticate you using your chosen sign on method'" do
+          flash[:alert].should eq 'Sorry, we were not able to authenticate you using your chosen sign on method'
+        end
+
+        it "should redirect to request.session[:return_uri]" do
+          response.should redirect_to request.session[:return_uri]
+        end
+      end
+
+      context "when request.session[:return_uri] is nil" do
+
+        before do
+          post :failure
         end
 
         it "should be permanent redirect" do

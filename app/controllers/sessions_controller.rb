@@ -14,4 +14,10 @@ class SessionsController < ApplicationController
                    provider: auth_hash['provider'] }
     redirect_to root_path, status: 301, notice: "You have successfully been authenticated through Facebook" and return
   end
+
+  def failure
+    redirect_to session[:return_uri] || root_path,
+               status: 301,
+                alert: "Sorry, we were not able to authenticate you using your chosen sign on method" and return
+  end
 end
