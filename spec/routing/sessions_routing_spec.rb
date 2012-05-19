@@ -23,6 +23,10 @@ describe SessionsController do
       it ":post '/auth/failure' should route to sessions#failure" do
         { post: "/auth/failure" }.should route_to("sessions#failure")
       end
+
+      it ":get '/sign_out' should route to sessions#destroy" do
+        { get: "/sign_out" }.should route_to("sessions#destroy")
+      end
     end
 
     context "when invalid" do

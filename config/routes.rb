@@ -20,5 +20,6 @@ Wishbone::Application.routes.draw do
   scope controller: 'sessions', constraints: { provider: /facebook/ } do
     match '/auth/:provider/callback' => :authenticate_user, as: :omniauth_callback
     match '/auth/failure' => :failure, as: :omniauth_failure
+    match '/sign_out' => :destroy, as: :user_signout
   end
 end
