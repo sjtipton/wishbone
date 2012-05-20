@@ -1,4 +1,7 @@
 class Forecast < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :prediction
+
   attr_accessible :prediction_id, :title, :user_id
 
   validates :prediction_id, :title, :user_id, presence: true

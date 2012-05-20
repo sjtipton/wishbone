@@ -1,4 +1,7 @@
 class Prediction < ActiveRecord::Base
+  has_many :forecasts, dependent: :destroy
+  has_many :users, through: :forecasts
+
   attr_accessible :game_id, :losing_team_id, :losing_team_score, :winning_team_id, :winning_team_score
 
   validates :game_id, :losing_team_id, :winning_team_id, presence: true

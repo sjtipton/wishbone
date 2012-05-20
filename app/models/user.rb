@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  has_many :forecasts, dependent: :destroy
+  has_many :predictions, through: :forecasts
+
   attr_accessible :email, :last_sign_in_at, :provider, :sign_in_count, :uid
 
   PROVIDERS = ["facebook"].freeze

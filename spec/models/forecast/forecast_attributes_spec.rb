@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe Forecast do
 
+  it { should belong_to(:user) }
+  it { should belong_to(:prediction) }
+
   describe "attributes" do
 
     it { should respond_to(:title) }
