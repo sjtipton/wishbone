@@ -28,4 +28,12 @@ FactoryGirl.define do
     sign_in_count     { SecureRandom.random_number(1e1.to_i) }
     last_sign_in_at   { Time.now }
   end
+
+  factory :prediction do
+    game_id             { SecureRandom.random_number(1e3.to_i) }
+    winning_team_id     { SecureRandom.random_number(1e2.to_i) }
+    losing_team_id      { SecureRandom.random_number(1e2.to_i) }
+    winning_team_score  { (24..48).to_a.sample }
+    losing_team_score   { (3..23).to_a.sample }
+  end
 end
