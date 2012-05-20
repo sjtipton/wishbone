@@ -30,10 +30,10 @@ FactoryGirl.define do
   end
 
   factory :prediction do
-    game_id             { SecureRandom.random_number(1e3.to_i) }
-    winning_team_id     { SecureRandom.random_number(1e2.to_i) }
-    losing_team_id      { SecureRandom.random_number(1e2.to_i) }
-    winning_team_score  { (24..48).to_a.sample }
-    losing_team_score   { (3..23).to_a.sample }
+    game_id             { SecureRandom.random_number(1e7.to_i) }
+    winning_team_id     { SecureRandom.random_number(1e6.to_i) }
+    losing_team_id      { SecureRandom.random_number(1e5.to_i) }
+    winning_team_score  { 26 }
+    losing_team_score   { 17 }
   end
 end
