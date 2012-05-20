@@ -21,11 +21,42 @@ describe Prediction do
     it { should allow_value(7).for(:losing_team_score) }
     it { should_not allow_value('ten').for(:winning_team_score) }
     it { should_not allow_value('seven').for(:losing_team_score) }
+  end
 
-    it { should allow_value('').for(:winning_team_score) }
-    it { should allow_value('').for(:losing_team_score) }
-    it { should allow_value(nil).for(:winning_team_score) }
-    it { should allow_value(nil).for(:losing_team_score) }
+  context "when winning_team_score is provided without a losing_team_score" do
+
+    before do
+      @prediction = FactoryGirl.build(:prediction, winning_team_score: 24,
+                                                    losing_team_score: nil)
+    end
+
+    it "should not be valid" do
+      @prediction.should_not be_valid
+    end
+  end
+
+  context "when losing_team_score is provided without a winning_team_score" do
+
+    before do
+      @prediction = FactoryGirl.build(:prediction, winning_team_score: nil,
+                                                    losing_team_score: 17)
+    end
+
+    it "should not be valid" do
+      @prediction.should_not be_valid
+    end
+  end
+
+  context "when both team scores are not provided" do
+
+    before do
+      @prediction = FactoryGirl.build(:prediction, winning_team_score: nil,
+                                                    losing_team_score: nil)
+    end
+
+    it "should be valid" do
+      @prediction.should be_valid
+    end
   end
 
   context "when winning_team_score is less than losing_team_score" do

@@ -36,4 +36,10 @@ FactoryGirl.define do
     winning_team_score  { 26 }
     losing_team_score   { 17 }
   end
+
+  factory :forecast do
+    title           { "Training Camp Edition" }
+    user_id         { SecureRandom.random_number(1e6.to_i) }
+    prediction_id   { SecureRandom.random_number(1e4.to_i) }
+  end
 end
