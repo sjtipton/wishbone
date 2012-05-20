@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe User do
 
+  it { should have_many(:forecasts) }
+  it { should have_many(:predictions).through(:forecasts) }
+
   describe "attributes" do
 
     it { should respond_to(:email) }

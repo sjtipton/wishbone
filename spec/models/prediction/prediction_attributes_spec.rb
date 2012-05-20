@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe Prediction do
 
+  it { should have_many(:forecasts) }
+  it { should have_many(:users).through(:forecasts) }
+
   describe "attributes" do
 
     it { should respond_to(:game_id) }
