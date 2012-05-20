@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe User do
 
-  before do
-    @attrs = FactoryGirl.attributes_for(:user)
-  end
-
   describe "attributes" do
 
     it { should respond_to(:email) }

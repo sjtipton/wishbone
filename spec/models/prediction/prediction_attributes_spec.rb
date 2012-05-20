@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe Prediction do
 
-  before do
-    @attrs = FactoryGirl.attributes_for(:prediction)
-  end
-
   describe "attributes" do
 
     it { should respond_to(:game_id) }
