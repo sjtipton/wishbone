@@ -21,7 +21,7 @@ describe User do
 
         it "should return the matching User" do
           @result.should be_a(User)
-          @result.attributes.should eq @user.attributes
+          @result.id.should eq @user.id
         end
       end
 
