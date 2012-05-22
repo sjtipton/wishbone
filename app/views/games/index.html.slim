@@ -8,4 +8,4 @@ table
 	- @schedule.each do |game|
 		tr
 			td = link_to game.label, game_path(game.id)
-			td = Time.parse(game.played_at).strftime('%b %d')
+			td = game.played_at.strftime('%b %d')
