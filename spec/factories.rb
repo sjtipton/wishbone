@@ -18,7 +18,7 @@ FactoryGirl.define do
     week          { (1..17).to_a.sample }
     home_team_id  { SecureRandom.random_number(1e2.to_i) }
     away_team_id  { SecureRandom.random_number(1e2.to_i) }
-    played_at     { Time.now.to_json }
+    played_at     { Time.now }
   end
 
   factory :user do
