@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520020108) do
+ActiveRecord::Schema.define(:version => 20120522184532) do
 
   create_table "forecasts", :force => true do |t|
     t.string   "title",         :null => false
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20120520020108) do
     t.datetime "last_sign_in_at"
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
+    t.text     "teams"
   end
 
 end
