@@ -27,6 +27,7 @@ FactoryGirl.define do
     email             { Forgery(:internet).email_address }
     sign_in_count     { SecureRandom.random_number(1e1.to_i) }
     last_sign_in_at   { Time.now }
+    teams             { [FactoryGirl.build(:team)] }
   end
 
   factory :prediction do
