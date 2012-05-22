@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
 
   it { should have_many(:forecasts) }
-  it { should have_many(:predictions).through(:forecasts) }
+  it { should have_many(:predictions) }
 
   describe "attributes" do
 
