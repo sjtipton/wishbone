@@ -15,17 +15,4 @@ describe HomeController do
       response.should render_template('home/index')
     end
   end
-
-  describe "GET 'authentication_menu'" do
-
-    before { get :authentication_menu }
-
-    it "should be successful" do
-      response.should be_success
-    end
-
-    it "should render 'home/authentication_menu'" do
-      response.should render_template('home/authentication_menu')
-    end
-  end
 end
