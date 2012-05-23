@@ -1,1 +1,16 @@
-h1 New Forecast
+- if @forecast.errors.any?
+	ol
+	- @forecast.errors.full_messages.each do |msg|
+		li = msg
+
+h3 OK Mr. Expert, here is your chance to shore up your football skills and knowledge of the future!
+
+= form_for @forecast, url: { action: "create" } do |f|
+	div
+		h2 1. Name your Forecast
+		span
+			|  #{link_to "Why?", "#", title: "Because it's YOURS! Put a name on it!"}
+	div
+		= f.text_field :title, placeholder: "My Fearless Forecast"
+
+	div = f.submit "Submit"

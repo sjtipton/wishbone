@@ -14,7 +14,14 @@ class PredictionsController < ApplicationController
     @forecast = Forecast.find(params[:forecast_id])
     @prediction = @forecast.predictions.new(params[:prediction])
     Wildcat::Game.all { |game| @games = game }
+    Wildcat::Game.find(@prediction.game_id) { |game| @game = game }
     Wildcat::Config.hydra.run
+
+    if @prediction.winning_team_id == @game.home_team_id
+      @prediction.losing_team_id = @game.away_team_id
+    else
+      @prediction.losing_team_id = @game.home_team_id
+    end
 
     if @prediction.save
       redirect_to new_prediction_path(forecast_id: @forecast.id), status: :moved_permanently
