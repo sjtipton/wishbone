@@ -50,31 +50,34 @@ describe PredictionsController do
 
     describe "POST 'create'" do
 
-      before { post :create, forecast_id: @forecast.id,
-                              prediction: @attrs }
+      context "when valid" do
 
-      it "should be successful and redirect" do
-        response.status.should be(301)
-      end
+        before { post :create, forecast_id: @forecast.id,
+                                prediction: @attrs }
 
-      it "should assign @user" do
-        assigns(:user).should be_a(User)
-        assigns(:user).id.should eq @forecast.user_id
-        assigns(:user).uid.should eq request.session[:user][:uid]
-      end
+        it "should be successful and redirect" do
+          response.status.should be(301)
+        end
 
-      it "should assign @forecast" do
-        assigns(:forecast).should be_a(Forecast)
-        assigns(:forecast).user_id.should eq @user.id
-      end
+        it "should assign @user" do
+          assigns(:user).should be_a(User)
+          assigns(:user).id.should eq @forecast.user_id
+          assigns(:user).uid.should eq request.session[:user][:uid]
+        end
 
-      it "should assign @prediction" do
-        assigns(:prediction).should be_a(Prediction)
-        assigns(:prediction).forecast_id.should eq @forecast.id
-      end
+        it "should assign @forecast" do
+          assigns(:forecast).should be_a(Forecast)
+          assigns(:forecast).user_id.should eq @user.id
+        end
 
-      it "should redirect to 'predictions#new'" do
-        response.should redirect_to new_prediction_path(forecast_id: assigns(:forecast).id)
+        it "should assign @prediction" do
+          assigns(:prediction).should be_a(Prediction)
+          assigns(:prediction).forecast_id.should eq @forecast.id
+        end
+
+        it "should redirect to 'predictions#new'" do
+          response.should redirect_to new_prediction_path(forecast_id: assigns(:forecast).id)
+        end
       end
     end
 
@@ -110,36 +113,39 @@ describe PredictionsController do
 
     describe "PUT 'update'" do
 
-      before do
-        @updated_attributes = @attrs.merge(winning_team_score: 34)
-        put :update, forecast_id: @forecast.id,
-                              id: @prediction.id,
-                      prediction: @updated_attributes
-      end
+      context "when valid" do
 
-      it "should be successful and redirect" do
-        response.status.should be(301)
-      end
+        before do
+          @updated_attributes = @attrs.merge(winning_team_score: 34)
+          put :update, forecast_id: @forecast.id,
+                                id: @prediction.id,
+                        prediction: @updated_attributes
+        end
 
-      it "should assign @user" do
-        assigns(:user).should be_a(User)
-        assigns(:user).id.should eq @forecast.user_id
-        assigns(:user).uid.should eq request.session[:user][:uid]
-      end
+        it "should be successful and redirect" do
+          response.status.should be(301)
+        end
 
-      it "should assign @forecast" do
-        assigns(:forecast).should be_a(Forecast)
-        assigns(:forecast).user_id.should eq @user.id
-      end
+        it "should assign @user" do
+          assigns(:user).should be_a(User)
+          assigns(:user).id.should eq @forecast.user_id
+          assigns(:user).uid.should eq request.session[:user][:uid]
+        end
 
-      it "should assign @prediction" do
-        assigns(:prediction).should be_a(Prediction)
-        assigns(:prediction).forecast_id.should eq @forecast.id
-        assigns(:prediction).winning_team_score.should eq @updated_attributes[:winning_team_score]
-      end
+        it "should assign @forecast" do
+          assigns(:forecast).should be_a(Forecast)
+          assigns(:forecast).user_id.should eq @user.id
+        end
 
-      it "should redirect to 'users#show'" do
-        response.should redirect_to user_path(@user.id)
+        it "should assign @prediction" do
+          assigns(:prediction).should be_a(Prediction)
+          assigns(:prediction).forecast_id.should eq @forecast.id
+          assigns(:prediction).winning_team_score.should eq @updated_attributes[:winning_team_score]
+        end
+
+        it "should redirect to 'users#show'" do
+          response.should redirect_to user_path(@user.id)
+        end
       end
     end
   end
