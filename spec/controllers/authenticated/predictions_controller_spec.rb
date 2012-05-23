@@ -1,7 +1,19 @@
 require 'spec_helper'
+require 'support/hydra_spec_helper'
+include HydraSpecHelper
 
 describe PredictionsController do
   render_views
+
+  before do
+    @game = FactoryGirl.build(:game)
+
+    stub_hydra
+    stub_for_game_index([@game])
+    stub_for_show_game(@game)
+  end
+
+  after { clear_get_stubs }
 
   context "when authenticated through Facebook" do
 
@@ -16,7 +28,8 @@ describe PredictionsController do
                                    provider: request.session[:user][:provider])
       @forecast = FactoryGirl.create(:forecast, user_id: @user.id)
       @attrs = FactoryGirl.attributes_for(:prediction, forecast_id: @forecast.id)
-      @prediction = FactoryGirl.create(:prediction, forecast_id: @forecast.id)
+      @prediction = FactoryGirl.create(:prediction, forecast_id: @forecast.id,
+                                                        game_id: @game.id)
     end
 
     describe "GET 'new'" do
@@ -41,6 +54,13 @@ describe PredictionsController do
       it "should assign @prediction" do
         assigns(:prediction).should be_a(Prediction)
         assigns(:prediction).forecast_id.should eq @forecast.id
+      end
+
+      it "should assign @games" do
+        assigns(:games).should be_an(Array)
+        assigns(:games).should_not be_empty
+        assigns(:games).first.should be_a(Wildcat::Game)
+        assigns(:games).first.id.should eq @game.id
       end
 
       it "should render 'predictions/new'" do
@@ -75,6 +95,13 @@ describe PredictionsController do
           assigns(:prediction).forecast_id.should eq @forecast.id
         end
 
+        it "should assign @games" do
+          assigns(:games).should be_an(Array)
+          assigns(:games).should_not be_empty
+          assigns(:games).first.should be_a(Wildcat::Game)
+          assigns(:games).first.id.should eq @game.id
+        end
+
         it "should redirect to 'predictions#new'" do
           response.should redirect_to new_prediction_path(forecast_id: assigns(:forecast).id)
         end
@@ -103,6 +130,13 @@ describe PredictionsController do
         it "should assign @prediction" do
           assigns(:prediction).should be_a(Prediction)
           assigns(:prediction).forecast_id.should eq @forecast.id
+        end
+
+        it "should assign @games" do
+          assigns(:games).should be_an(Array)
+          assigns(:games).should_not be_empty
+          assigns(:games).first.should be_a(Wildcat::Game)
+          assigns(:games).first.id.should eq @game.id
         end
 
         it "should have errors" do
@@ -139,6 +173,12 @@ describe PredictionsController do
       it "should assign @prediction" do
         assigns(:prediction).should be_a(Prediction)
         assigns(:prediction).forecast_id.should eq @forecast.id
+      end
+
+      it "should assign @game" do
+        assigns(:game).should_not be_nil
+        assigns(:game).should be_a(Wildcat::Game)
+        assigns(:game).id.should eq @game.id
       end
 
       it "should render 'predictions/edit'" do
@@ -178,6 +218,12 @@ describe PredictionsController do
           assigns(:prediction).winning_team_score.should eq @updated_attributes[:winning_team_score]
         end
 
+        it "should assign @game" do
+          assigns(:game).should_not be_nil
+          assigns(:game).should be_a(Wildcat::Game)
+          assigns(:game).id.should eq @game.id
+        end
+
         it "should redirect to 'users#show'" do
           response.should redirect_to user_path(@user.id)
         end
@@ -210,6 +256,12 @@ describe PredictionsController do
         it "should assign @prediction" do
           assigns(:prediction).should be_a(Prediction)
           assigns(:prediction).forecast_id.should eq @forecast.id
+        end
+
+        it "should assign @game" do
+          assigns(:game).should_not be_nil
+          assigns(:game).should be_a(Wildcat::Game)
+          assigns(:game).id.should eq @game.id
         end
 
         it "should have errors" do

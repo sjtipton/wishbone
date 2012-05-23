@@ -31,6 +31,10 @@ describe PredictionsController do
         assigns(:prediction).should be_nil
       end
 
+      it "should not assign @games" do
+        assigns(:games).should be_nil
+      end
+
       it "should redirect to '/auth/facebook'" do
         response.should redirect_to '/auth/facebook'
       end
@@ -57,6 +61,10 @@ describe PredictionsController do
         assigns(:prediction).should be_nil
       end
 
+      it "should not assign @games" do
+        assigns(:games).should be_nil
+      end
+
       it "should redirect to '/auth/facebook'" do
         response.should redirect_to '/auth/facebook'
       end
@@ -81,6 +89,10 @@ describe PredictionsController do
 
       it "should not assign @prediction" do
         assigns(:prediction).should be_nil
+      end
+
+      it "should not assign @game" do
+        assigns(:game).should be_nil
       end
 
       it "should redirect to '/auth/facebook'" do
@@ -111,6 +123,10 @@ describe PredictionsController do
 
       it "should not assign @prediction" do
         assigns(:prediction).should be_nil
+      end
+
+      it "should not assign @game" do
+        assigns(:game).should be_nil
       end
 
       it "should redirect to '/auth/facebook'" do
