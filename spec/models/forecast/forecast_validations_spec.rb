@@ -8,12 +8,9 @@ describe Forecast do
 
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:user_id) }
-    it { should validate_presence_of(:prediction_id) }
 
     it { should allow_value(23).for(:user_id) }
-    it { should allow_value(11).for(:prediction_id) }
     it { should_not allow_value(0).for(:user_id) }
-    it { should_not allow_value(0).for(:prediction_id) }
 
     it { should allow_value("My First Forecast").for(:title) }
     it { should_not allow_value("a" * 65).for(:title) }
