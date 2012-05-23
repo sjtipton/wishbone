@@ -1,5 +1,4 @@
 class Prediction < ActiveRecord::Base
-  belongs_to :user
   belongs_to :forecast
 
   attr_accessible :game_id,
@@ -7,13 +6,12 @@ class Prediction < ActiveRecord::Base
                   :losing_team_score,
                   :winning_team_id,
                   :winning_team_score,
-                  :user_id,
                   :forecast_id
 
-  validates :game_id, :losing_team_id, :winning_team_id, :user_id, :forecast_id, presence: true
+  validates :game_id, :losing_team_id, :winning_team_id, :forecast_id, presence: true
   validates :winning_team_score, presence: true, if: "losing_team_score.present?"
   validates :losing_team_score, presence: true, if: "winning_team_score.present?"
-  validates :game_id, :losing_team_id, :winning_team_id, :user_id, :forecast_id, numericality: { greater_than: 0 }
+  validates :game_id, :losing_team_id, :winning_team_id, :forecast_id, numericality: { greater_than: 0 }
   validates :losing_team_score, :winning_team_score, numericality: { allow_nil: true }
   validate :winning_team_score_must_be_greater_than_or_equal_to_losing_team_score
 

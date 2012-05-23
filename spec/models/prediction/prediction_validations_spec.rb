@@ -9,18 +9,15 @@ describe Prediction do
     it { should validate_presence_of(:game_id) }
     it { should validate_presence_of(:winning_team_id) }
     it { should validate_presence_of(:losing_team_id) }
-    it { should validate_presence_of(:user_id) }
     it { should validate_presence_of(:forecast_id) }
 
     it { should allow_value(23).for(:game_id) }
     it { should allow_value(11).for(:winning_team_id) }
     it { should allow_value(2).for(:losing_team_id) }
-    it { should allow_value(23).for(:user_id) }
     it { should allow_value(11).for(:forecast_id) }
     it { should_not allow_value(0).for(:game_id) }
     it { should_not allow_value(0).for(:winning_team_id) }
     it { should_not allow_value(0).for(:losing_team_id) }
-    it { should_not allow_value(0).for(:user_id) }
     it { should_not allow_value(0).for(:forecast_id) }
 
     it { should allow_value(26).for(:winning_team_score) }

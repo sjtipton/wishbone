@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
   include ActiveModel::Validations
 
   has_many :forecasts, dependent: :destroy
-  has_many :predictions, dependent: :destroy
 
   attr_accessible :email, :last_sign_in_at, :provider, :sign_in_count, :uid, :teams
 
