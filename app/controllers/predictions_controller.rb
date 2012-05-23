@@ -15,8 +15,7 @@ class PredictionsController < ApplicationController
     if @prediction.save
       redirect_to new_prediction_path(forecast_id: @forecast.id), status: :moved_permanently
     else
-      ap "failed"
-      ap @prediction.errors.full_messages
+      render action: 'new', status: :unprocessable_entity
     end
   end
 
@@ -34,8 +33,7 @@ class PredictionsController < ApplicationController
     if @prediction.update_attributes(params[:prediction])
       redirect_to user_path(@user.id), status: :moved_permanently
     else
-      ap "failed"
-      ap @prediction.errors.full_messages
+      render action: 'edit', status: :unprocessable_entity
     end
   end
 end

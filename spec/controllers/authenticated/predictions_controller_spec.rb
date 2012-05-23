@@ -79,6 +79,41 @@ describe PredictionsController do
           response.should redirect_to new_prediction_path(forecast_id: assigns(:forecast).id)
         end
       end
+
+      context "when invalid" do
+
+        before { post :create, forecast_id: @forecast.id,
+                                prediction: @attrs.merge(winning_team_id: nil) }
+
+        it "should be invalid" do
+          response.status.should be(422)
+        end
+
+        it "should assign @user" do
+          assigns(:user).should be_a(User)
+          assigns(:user).id.should eq @forecast.user_id
+          assigns(:user).uid.should eq request.session[:user][:uid]
+        end
+
+        it "should assign @forecast" do
+          assigns(:forecast).should be_a(Forecast)
+          assigns(:forecast).user_id.should eq @user.id
+        end
+
+        it "should assign @prediction" do
+          assigns(:prediction).should be_a(Prediction)
+          assigns(:prediction).forecast_id.should eq @forecast.id
+        end
+
+        it "should have errors" do
+          assigns(:prediction).errors.any?.should be_true
+          assigns(:prediction).errors.full_messages.should include("Winning team can't be blank")
+        end
+
+        it "should render 'predictions/new'" do
+          response.should render_template('predictions/new')
+        end
+      end
     end
 
     describe "GET 'edit'" do
@@ -145,6 +180,45 @@ describe PredictionsController do
 
         it "should redirect to 'users#show'" do
           response.should redirect_to user_path(@user.id)
+        end
+      end
+
+      context "when invalid" do
+
+        before do
+          @invalid_updated_attributes = @attrs.merge(winning_team_id: nil)
+          put :update, forecast_id: @forecast.id,
+                                id: @prediction.id,
+                        prediction: @invalid_updated_attributes
+        end
+
+        it "should be invalid" do
+          response.status.should be(422)
+        end
+
+        it "should assign @user" do
+          assigns(:user).should be_a(User)
+          assigns(:user).id.should eq @forecast.user_id
+          assigns(:user).uid.should eq request.session[:user][:uid]
+        end
+
+        it "should assign @forecast" do
+          assigns(:forecast).should be_a(Forecast)
+          assigns(:forecast).user_id.should eq @user.id
+        end
+
+        it "should assign @prediction" do
+          assigns(:prediction).should be_a(Prediction)
+          assigns(:prediction).forecast_id.should eq @forecast.id
+        end
+
+        it "should have errors" do
+          assigns(:prediction).errors.any?.should be_true
+          assigns(:prediction).errors.full_messages.should include("Winning team can't be blank")
+        end
+
+        it "should render 'predictions/edit'" do
+          response.should render_template('predictions/edit')
         end
       end
     end

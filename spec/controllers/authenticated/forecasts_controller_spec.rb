@@ -67,6 +67,35 @@ describe ForecastsController do
           response.should redirect_to new_prediction_path(forecast_id: assigns(:forecast).id)
         end
       end
+
+      context "when invalid" do
+
+        before { post :create, forecast: @attrs.merge(title: "") }
+
+        it "should be invalid" do
+          response.status.should be(422)
+        end
+
+        it "should assign @user" do
+          assigns(:user).should be_a(User)
+          assigns(:user).id.should eq @forecast.user_id
+          assigns(:user).uid.should eq request.session[:user][:uid]
+        end
+
+        it "should assign @forecast" do
+          assigns(:forecast).should be_a(Forecast)
+          assigns(:forecast).user_id.should eq @user.id
+        end
+
+        it "should have errors" do
+          assigns(:forecast).errors.any?.should be_true
+          assigns(:forecast).errors.full_messages.should include("Title can't be blank")
+        end
+
+        it "should render 'forecasts/new'" do
+          response.should render_template('forecasts/new')
+        end
+      end
     end
 
     describe "GET 'edit'" do
@@ -115,11 +144,42 @@ describe ForecastsController do
         it "should assign @forecast" do
           assigns(:forecast).should be_a(Forecast)
           assigns(:forecast).user_id.should eq @user.id
-          assigns(:forecast).title.should eq @updated_attributes[:title]
         end
 
         it "should redirect to 'users#show'" do
           response.should redirect_to user_path(@user.id)
+        end
+      end
+
+      context "when invalid" do
+
+        before do
+          @invalid_updated_attributes = @attrs.merge(title: "")
+          put :update, id: @forecast.id, forecast: @invalid_updated_attributes
+        end
+
+        it "should be invalid" do
+          response.status.should be(422)
+        end
+
+        it "should assign @user" do
+          assigns(:user).should be_a(User)
+          assigns(:user).id.should eq @forecast.user_id
+          assigns(:user).uid.should eq request.session[:user][:uid]
+        end
+
+        it "should assign @forecast" do
+          assigns(:forecast).should be_a(Forecast)
+          assigns(:forecast).user_id.should eq @user.id
+        end
+
+        it "should have errors" do
+          assigns(:forecast).errors.any?.should be_true
+          assigns(:forecast).errors.full_messages.should include("Title can't be blank")
+        end
+
+        it "should render 'forecasts/edit'" do
+          response.should render_template('forecasts/edit')
         end
       end
     end
