@@ -31,6 +31,10 @@ Wishbone::Application.routes.draw do
     put '/forecasts/:forecast_id/predictions/:id' => :update, as: :update_prediction
   end
 
+  scope controller: 'users', constraints: { id: /[0-9]+/ } do
+    get 'users/:id' => :show, as: :user
+  end
+
   # Omniauth Facebook routes
   scope controller: 'sessions', constraints: { provider: /facebook/ } do
     match '/auth/:provider/callback' => :authenticate_user, as: :omniauth_callback
