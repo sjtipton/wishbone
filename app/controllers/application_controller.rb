@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_user_with_facebook!
-    redirect_to authentication_menu_path unless facebook_user_signed_in?
+    redirect_to "/auth/facebook" unless facebook_user_signed_in?
   end
 
   def current_facebook_user
