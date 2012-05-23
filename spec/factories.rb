@@ -36,7 +36,6 @@ FactoryGirl.define do
     losing_team_id      { SecureRandom.random_number(1e5.to_i) }
     winning_team_score  { 26 }
     losing_team_score   { 17 }
-    user_id             { SecureRandom.random_number(1e6.to_i) }
     forecast_id         { SecureRandom.random_number(1e4.to_i) }
   end
 
