@@ -11,7 +11,7 @@ describe UsersController do
     context "when valid" do
 
       it ":get '/users/:id' should route to users#show" do
-        { get: "/users/#{@id}" }.should route_to("users#show")
+        { get: "/users/#{@id}" }.should route_to("users#show", id: "#{@id}")
       end
     end
 
