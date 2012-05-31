@@ -16,8 +16,7 @@ div
 h3 Week 1 Sept. 5-10, 2012
 - @games.take(16).each do |game|
 	= form_for @prediction, url: { action: "create" } do |f|
-
 		div
-			= f.select :winning_team_id, options_for_select([[game.label.split(" at ").first, game.away_team_id],[game.label.split(" at ").last, game.home_team_id]]), include_blank: game.label
+			= f.select :winning_team_id, options_for_select([[game.away_team.nickname, game.away_team.id],[game.home_team.nickname, game.home_team.id]]), include_blank: game.label
 			= f.hidden_field :game_id, value: game.id
 			= f.submit "Submit"
