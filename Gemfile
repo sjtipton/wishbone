@@ -4,7 +4,7 @@ gem 'rails', '3.2.3'
 gem 'pg'
 gem 'thin'
 gem 'slim-rails'
-gem 'wildcat', '0.0.6', path: File.join(File.dirname(__FILE__), '/vendor/gems/wildcat-0.0.6')
+gem 'wildcat', '0.0.7', path: File.join(File.dirname(__FILE__), '/vendor/gems/wildcat-0.0.7')
 gem 'omniauth'
 gem 'omniauth-facebook'
 
