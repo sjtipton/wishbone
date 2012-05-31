@@ -6,9 +6,13 @@ describe PredictionsController do
   render_views
 
   before do
-    @game = FactoryGirl.build(:game)
+    @home_team = FactoryGirl.build(:team, name: "Dallas Cowboys", abbreviation: "DAL")
+    @away_team = FactoryGirl.build(:team, name: "Washington Redskins", abbreviation: "WAS")
+    @game = FactoryGirl.build(:game, home_team_id: @home_team.id, away_team_id: @away_team.id)
 
     stub_hydra
+    stub_for_show_team(@home_team)
+    stub_for_show_team(@away_team)
     stub_for_game_index([@game])
     stub_for_show_game(@game)
   end
@@ -27,9 +31,8 @@ describe PredictionsController do
       @user = FactoryGirl.create(:user, uid: request.session[:user][:uid],
                                    provider: request.session[:user][:provider])
       @forecast = FactoryGirl.create(:forecast, user_id: @user.id)
-      @attrs = FactoryGirl.attributes_for(:prediction, forecast_id: @forecast.id)
-      @prediction = FactoryGirl.create(:prediction, forecast_id: @forecast.id,
-                                                        game_id: @game.id)
+      @attrs = FactoryGirl.attributes_for(:prediction, forecast_id: @forecast.id, game_id: @game.id)
+      @prediction = FactoryGirl.create(:prediction, @attrs)
     end
 
     describe "GET 'new'" do
