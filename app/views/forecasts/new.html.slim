@@ -13,4 +13,14 @@ h3 OK Mr. Expert, here is your chance to shore up your football skills and knowl
 	div
 		= f.text_field :title, placeholder: "My Fearless Forecast"
 
-	div = f.submit "Submit"
+	div
+		h2 2. Start picking buddy! The standings will update on the right as you pick.
+
+	h3 Week 1 Sept. 5-10, 2012
+	- @games.take(16).each do |game|
+		= fields_for :predictions do |builder|
+			div
+				= builder.select :winning_team_id, options_for_select([[game.label.split(" at ").first, game.away_team_id],[game.label.split(" at ").last, game.home_team_id]]), include_blank: game.label
+				= builder.hidden_field :game_id, value: game.id
+
+	= f.submit "Submit"
