@@ -4,17 +4,11 @@ class ForecastsController < ApplicationController
   def new
     @user = User.find_by_uid(current_facebook_user[:uid])
     @forecast = @user.forecasts.new
-    @prediction = @forecast.predictions.build
-    Wildcat::Game.all { |game| @games = game }
-    Wildcat::Config.hydra.run
   end
 
   def create
-  ap params[:forecast]
     @user = User.find_by_uid(current_facebook_user[:uid])
     @forecast = @user.forecasts.new(params[:forecast])
-    Wildcat::Game.all { |game| @games = game }
-    Wildcat::Config.hydra.run
 
     if @forecast.save
       redirect_to new_prediction_path(forecast_id: @forecast.id), status: :moved_permanently
