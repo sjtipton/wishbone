@@ -9,7 +9,6 @@ describe GamesController do
     @game = FactoryGirl.build(:game)
 
     stub_hydra
-    stub_for_game_index([@game])
     stub_for_show_game(@game)
   end
 
@@ -17,21 +16,53 @@ describe GamesController do
 
   describe "GET 'index'" do
 
-    before { get :index }
+    context "when not passing optional params for a particular week" do
 
-    it "should be successful" do
-      response.should be_success
+      before do
+        stub_for_game_index([@game])
+        get :index
+      end
+
+      it "should be successful" do
+        response.should be_success
+      end
+
+      it "should assign @schedule" do
+        assigns(:schedule).should be_an(Array)
+        assigns(:schedule).should_not be_empty
+        assigns(:schedule).first.should be_a(Wildcat::Game)
+        assigns(:schedule).first.id.should eq @game.id
+        (1..17).to_a.should include assigns(:schedule).sample.week
+      end
+
+      it "should render 'games/index'" do
+        response.should render_template('games/index')
+      end
     end
 
-    it "should assign @schedule" do
-      assigns(:schedule).should be_an(Array)
-      assigns(:schedule).should_not be_empty
-      assigns(:schedule).first.should be_a(Wildcat::Game)
-      assigns(:schedule).first.id.should eq @game.id
-    end
+    context "when passing optional params for a particular week" do
 
-    it "should render 'games/index'" do
-      response.should render_template('games/index')
+      before do
+        @game = FactoryGirl.build(:game, week: 1)
+        stub_for_game_index([@game], week: 1)
+        get :index, week: 1
+      end
+
+      it "should be successful" do
+        response.should be_success
+      end
+
+      it "should assign @schedule" do
+        assigns(:schedule).should be_an(Array)
+        assigns(:schedule).should_not be_empty
+        assigns(:schedule).first.should be_a(Wildcat::Game)
+        assigns(:schedule).first.id.should eq @game.id
+        assigns(:schedule).sample.week.should be(1)
+      end
+
+      it "should render 'games/index'" do
+        response.should render_template('games/index')
+      end
     end
   end
 

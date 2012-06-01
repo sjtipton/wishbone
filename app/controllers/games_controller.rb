@@ -1,7 +1,11 @@
 class GamesController < ApplicationController
 
   def index
-    Wildcat::Game.all { |game| @schedule = game }
+    if params[:week].present?
+      Wildcat::Game.all(week: params[:week]) { |game| @schedule = game }
+    else
+      Wildcat::Game.all { |game| @schedule = game }
+    end
     Wildcat::Config.hydra.run
   end
 
