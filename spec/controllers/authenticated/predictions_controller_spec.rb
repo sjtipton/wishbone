@@ -13,7 +13,7 @@ describe PredictionsController do
     stub_hydra
     stub_for_show_team(@home_team)
     stub_for_show_team(@away_team)
-    stub_for_game_index([@game])
+    stub_for_game_index([@game], week: 1)
     stub_for_show_game(@game)
   end
 

@@ -5,7 +5,8 @@ class PredictionsController < ApplicationController
     @user = User.find_by_uid(current_facebook_user[:uid])
     @forecast = Forecast.find(params[:forecast_id])
     @prediction = @forecast.predictions.new
-    Wildcat::Game.all { |game| @games = game }
+    @current_week = params[:week] || 1
+    Wildcat::Game.all(week: @current_week) { |game| @games = game }
     Wildcat::Config.hydra.run
   end
 
@@ -13,7 +14,8 @@ class PredictionsController < ApplicationController
     @user = User.find_by_uid(current_facebook_user[:uid])
     @forecast = Forecast.find(params[:forecast_id])
     @prediction = @forecast.predictions.new(params[:prediction])
-    Wildcat::Game.all { |game| @games = game }
+    @current_week = params[:week] || 1
+    Wildcat::Game.all(week: @current_week) { |game| @games = game }
     Wildcat::Game.find(@prediction.game_id) { |game| @game = game }
     Wildcat::Config.hydra.run
 
