@@ -34,4 +34,10 @@ class Prediction < ActiveRecord::Base
     Wildcat::Config.hydra.run
     @team
   end
+
+  def game
+    Wildcat::Game.find(self.game_id) { |game| @game = game }
+    Wildcat::Config.hydra.run
+    @game
+  end
 end
