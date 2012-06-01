@@ -13,8 +13,8 @@ div
 div
 	h2 2. Start picking buddy! The standings will update on the right as you pick.
 
-h3 Week 1 Sept. 5-10, 2012
-- @games.take(16).each do |game|
+h3 Week #{@current_week} #{date_range_for_current_week(@games)}
+- @games.each do |game|
 	= form_for @prediction, url: { action: "create" } do |f|
 		div
 			= f.radio_button "winning_team_id", game.away_team_id
