@@ -1,6 +1,6 @@
 ## Version 0.0.8
 
-**Return @games by week**
+**Add opts hash to Wildcat::Game.all to optionally return games by week**
 
 ## Version 0.0.7
 

@@ -223,7 +223,7 @@ describe Wildcat::Game do
 
       before do
         @games = FactoryGirl.build_list(:game, 16, week: 1)
-        stub_for_game_index(@games, "1")
+        stub_for_game_index(@games, week: 1)
       end
 
       after do
@@ -233,7 +233,7 @@ describe Wildcat::Game do
       it "should return an array of games" do
         @result = nil
 
-        Wildcat::Game.all(1) do |games|
+        Wildcat::Game.all(week: 1) do |games|
           @result = games
         end
         Wildcat::Config.hydra.run
@@ -247,7 +247,7 @@ describe Wildcat::Game do
 
       it "should return played_at as a valid Time" do
         @result = nil
-        Wildcat::Game.all(1) { |games| @result = games }
+        Wildcat::Game.all(week: 1) { |games| @result = games }
         Wildcat::Config.hydra.run
 
         @result.first.played_at.should be_a(Time)
@@ -257,15 +257,14 @@ describe Wildcat::Game do
     context "when not authorized" do
 
       before do
-        @week = (1..17).to_a.sample
         response_hash = { code: 401,
                           body: {error: "Invalid authentication token."}.to_json }
-        stub_for_get_url("#{Wildcat::Config.base_url}/games?week=#{@week}&" +
+        stub_for_get_url("#{Wildcat::Config.base_url}/games?" +
                          "auth_token=#{Wildcat::Config.auth_token}", response_hash)
       end
 
       it "should raise a Wildcat::UnauthorizedAccess error" do
-        expect { Wildcat::Game.all(@week) do |result|
+        expect { Wildcat::Game.all do |result|
                    @result = result
                  end
                  Wildcat::Config.hydra.run }.to raise_error(Wildcat::UnauthorizedAccess)
@@ -273,7 +272,7 @@ describe Wildcat::Game do
 
       it "should raise the correct Wildcat::UnauthorizedAccess error" do
         begin
-          Wildcat::Game.all(@week) do |result|
+          Wildcat::Game.all do |result|
             @result = result
           end
           Wildcat::Config.hydra.run
@@ -288,15 +287,14 @@ describe Wildcat::Game do
     context "when a 503 is returned" do
 
       before do
-        @week = (1..17).to_a.sample
         response_hash = { code: 503,
                           body: "We're sorry but something went wrong." }
-        stub_for_get_url("#{Wildcat::Config.base_url}/games?week=#{@week}&" +
+        stub_for_get_url("#{Wildcat::Config.base_url}/games?" +
                          "auth_token=#{Wildcat::Config.auth_token}", response_hash)
       end
 
       it "should raise a Wildcat::ServiceUnavailable error" do
-        expect { Wildcat::Game.all(@week) do |result|
+        expect { Wildcat::Game.all do |result|
                    @result = result
                  end
                  Wildcat::Config.hydra.run }.to raise_error(Wildcat::ServiceUnavailable)
@@ -304,7 +302,7 @@ describe Wildcat::Game do
 
       it "should raise the correct Wildcat::ServiceUnavailable error" do
         begin
-          Wildcat::Game.all(@week) do |result|
+          Wildcat::Game.all do |result|
             @result = result
           end
           Wildcat::Config.hydra.run
@@ -319,16 +317,15 @@ describe Wildcat::Game do
     context "when no code is returned" do
 
       before do
-        @week = (1..17).to_a.sample
         response_hash = { code: 0,
                           body: "",
                           curl_error_message: "bad request" }
-        stub_for_get_url("#{Wildcat::Config.base_url}/games?week=#{@week}&" +
+        stub_for_get_url("#{Wildcat::Config.base_url}/games?" +
                          "auth_token=#{Wildcat::Config.auth_token}", response_hash)
       end
 
       it "should raise a Wildcat::Error" do
-        expect { Wildcat::Game.all(@week) do |result|
+        expect { Wildcat::Game.all do |result|
                    @result = result
                  end
                  Wildcat::Config.hydra.run }.to raise_error(Wildcat::Error)
@@ -336,7 +333,7 @@ describe Wildcat::Game do
 
       it "should raise the correct Wildcat::Error" do
         begin
-          Wildcat::Game.all(@week) do |result|
+          Wildcat::Game.all do |result|
             @result = result
           end
           Wildcat::Config.hydra.run
