@@ -28,4 +28,10 @@ class Prediction < ActiveRecord::Base
     Wildcat::Config.hydra.run
     @team
   end
+
+  def losing_team
+    Wildcat::Team.find(self.losing_team_id) { |team| @team = team }
+    Wildcat::Config.hydra.run
+    @team
+  end
 end
