@@ -15,9 +15,9 @@ module HydraSpecHelper
                                                               time: 0.3 }))
   end
 
-  def stub_for_game_index(games)
+  def stub_for_game_index(games, week=nil)
     Wildcat::Config.hydra.stub(:get,
-                          "#{Wildcat::Config.base_url}/games?" +
+                          "#{Wildcat::Config.base_url}/games?week=#{week}&" +
                           "auth_token=#{Wildcat::Config.auth_token}").
                           and_return(Typhoeus::Response.new({ code: 200,
                                                               headers: "",
