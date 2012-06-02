@@ -4,10 +4,20 @@ class PredictionsController < ApplicationController
   def new
     @user = User.find_by_uid(current_facebook_user[:uid])
     @forecast = Forecast.find(params[:forecast_id])
-    @prediction = @forecast.predictions.new
     @current_week = params[:week] || 1
     Wildcat::Game.all(week: @current_week) { |game| @games = game }
     Wildcat::Config.hydra.run
+
+    @predictions = []
+    @games.each do |g|
+      existing_prediction = Prediction.find_by_game_id(g.id)
+      if existing_prediction.present?
+        prediction = existing_prediction
+      else
+        prediction = @forecast.predictions.new(game_id: g.id)
+      end
+      @predictions << prediction
+    end
   end
 
   def create

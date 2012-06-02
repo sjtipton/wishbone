@@ -1,8 +1,3 @@
-- if @prediction.errors.any?
-	ol
-	- @prediction.errors.full_messages.each do |msg|
-		li = msg
-
 h3 OK Mr. Expert, here is your chance to shore up your football skills and knowledge of the future!
 
 div
@@ -14,13 +9,16 @@ div
 	h2 2. Start picking buddy! The standings will update on the right as you pick.
 
 h3 Week #{@current_week} #{date_range_for_current_week(@games)}
-- @games.each do |game|
-	= form_for @prediction, url: { action: "create" } do |f|
+- @predictions.each do |prediction|
+	- action = prediction.new_record? ? "create" : "update"
+	- Wildcat::Game.find(prediction.game_id) { |g| @game = g }
+	- Wildcat::Config.hydra.run
+	= form_for prediction, url: { action: action } do |f|
 		div
-			= f.radio_button "winning_team_id", game.away_team_id
-			= f.label "winning_team_id_#{game.away_team_id}", game.away_team.nickname
-			= f.radio_button "winning_team_id", game.home_team_id
-			= f.label "winning_team_id_#{game.home_team_id}", game.home_team.nickname
+			= f.radio_button "winning_team_id", @game.away_team_id
+			= f.label "winning_team_id_#{@game.away_team_id}", @game.away_team.nickname
+			= f.radio_button "winning_team_id", @game.home_team_id
+			= f.label "winning_team_id_#{@game.home_team_id}", @game.home_team.nickname
 
-			= f.hidden_field :game_id, value: game.id
+			= f.hidden_field :game_id, value: @game.id
 			= f.submit "Submit"
