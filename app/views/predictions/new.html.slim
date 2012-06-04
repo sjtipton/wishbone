@@ -10,11 +10,12 @@ div
 
 h3 Week #{@current_week} #{date_range_for_current_week(@games)}
 - @predictions.each do |prediction|
-	- action = prediction.new_record? ? "create" : "update"
+	- url = prediction.new_record? ? create_prediction_path(forecast_id: prediction.forecast_id) : update_prediction_path(forecast_id: prediction.forecast_id, id: prediction.id)
+	- method = prediction.new_record? ? :post : :put
 	- Wildcat::Game.find(prediction.game_id) { |g| @game = g }
 	- Wildcat::Config.hydra.run
-	h4 Game ID: #{prediction.game_id} on #{prediction} through #{action}
-	= form_for prediction, url: { action: action } do |f|
+	h4 Game ID: #{prediction.game_id} on #{prediction} through #{url}
+	= form_for prediction, url: url, method: method do |f|
 		div
 			= f.radio_button "winning_team_id", @game.away_team_id
 			= f.label "winning_team_id_#{@game.away_team_id}", @game.away_team.nickname
