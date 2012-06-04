@@ -10,7 +10,7 @@ class PredictionsController < ApplicationController
 
     @predictions = []
     @games.each do |g|
-      existing_prediction = Prediction.find_by_game_id(g.id)
+      existing_prediction = @forecast.predictions.find_by_game_id(g.id)
       if existing_prediction.present?
         prediction = existing_prediction
       else
@@ -21,6 +21,7 @@ class PredictionsController < ApplicationController
   end
 
   def create
+  ap params[:prediction]
     @user = User.find_by_uid(current_facebook_user[:uid])
     @forecast = Forecast.find(params[:forecast_id])
     @prediction = @forecast.predictions.new(params[:prediction])
